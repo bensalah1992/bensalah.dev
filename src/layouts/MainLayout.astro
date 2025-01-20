@@ -1,0 +1,174 @@
+---
+import '../styles/global.css';
+import SocialSidebar from '../components/SocialSidebar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bensalah.dev</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="os-container">
+        <div class="os-window">
+            <div class="window-header">
+                <div class="window-controls">
+                    <span class="control close"></span>
+                    <span class="control minimize"></span>
+                    <span class="control maximize"></span>
+                </div>
+                <a href="#contact" class="window-title">hire_me.exe</a>
+                <div class="language-toggle">
+                    <span class="lang-option active" data-lang="DE">DE</span>
+                    <span class="divider">|</span>
+                    <span class="lang-option" data-lang="EN">EN</span>
+                </div>
+            </div>
+            <div class="window-content">
+                <slot name="header" />
+                <main>
+                    <slot />
+                </main>
+                <Footer />
+            </div>
+        </div>
+    </div>
+    <SocialSidebar />
+</body>
+</html>
+
+<style>
+    .os-container {
+        min-height: 100vh;
+        padding: 2rem;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    .os-window {
+        background: var(--background);
+        border-radius: 8px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        animation: windowOpen 0.5s ease-out;
+    }
+
+    .window-header {
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .window-controls {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .control {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .close { background: #ff5f56; }
+    .minimize { background: #ffbd2e; }
+    .maximize { background: #27c93f; }
+
+    .window-title {
+        color: var(--background);
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        margin-right: auto;
+    }
+
+    .window-title:hover {
+        opacity: 0.8;
+    }
+
+    .language-toggle {
+        color: var(--background);
+        background: transparent;
+        border: 2px solid var(--background);
+        border-radius: 6px;
+        padding: 0.3rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .language-toggle:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .lang-option {
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+        cursor: pointer;
+        font-weight: 900;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .lang-option.active {
+        opacity: 1;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .divider {
+        margin: 0 0.5rem;
+        opacity: 0.5;
+        font-weight: normal;
+    }
+
+    @keyframes windowOpen {
+        from {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .os-container {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<script>
+    const languageToggle = document.querySelector('.language-toggle');
+    const langOptions = document.querySelectorAll('.lang-option');
+    let currentLang = 'DE';
+    
+    languageToggle?.addEventListener('click', () => {
+        currentLang = currentLang === 'DE' ? 'EN' : 'DE';
+        langOptions.forEach(opt => {
+            if (opt.getAttribute('data-lang') === currentLang) {
+                opt.classList.add('active');
+            } else {
+                opt.classList.remove('active');
+            }
+        });
+
+        // Temporäre Benachrichtigung
+        alert('Diese Funktion wird zu einem späteren Zeitpunkt verfügbar sein.\n\nThis feature will be available later.');
+    });
+</script>
