@@ -4,7 +4,14 @@
         <p class="section-subtitle">Du willst mit mir arbeiten oder hast Fragen und Anregungen?<br>Dann schreib mir hier:</p>
         
         <div class="contact-container">
-            <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+            <form 
+                class="contact-form" 
+                name="contact" 
+                method="POST" 
+                data-netlify="true"
+            >
+                <input type="hidden" name="form-name" value="contact" />
+                
                 <div class="form-group">
                     <input type="text" id="name" name="name" required placeholder="Dein Name oder Unternehmen oder beides" />
                     <label for="name">Name</label>
@@ -133,35 +140,3 @@
         }
     }
 </style>
-
-<script>
-    const form = document.querySelector('.contact-form');
-    form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target as HTMLFormElement);
-        const submitBtn = form.querySelector('.submit-btn') as HTMLButtonElement;
-        
-        try {
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Wird gesendet...';
-            
-            // Hier kommt deine Form-Submission-Logik
-            // z.B. mit Formspree oder deinem eigenen Backend
-            
-            submitBtn.textContent = 'Gesendet!';
-            (e.target as HTMLFormElement).reset();
-            
-            setTimeout(() => {
-                submitBtn.textContent = 'Nachricht senden';
-                submitBtn.disabled = false;
-            }, 3000);
-            
-        } catch (error) {
-            submitBtn.textContent = 'Fehler beim Senden';
-            setTimeout(() => {
-                submitBtn.textContent = 'Nachricht senden';
-                submitBtn.disabled = false;
-            }, 3000);
-        }
-    });
-</script>
